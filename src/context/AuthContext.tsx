@@ -59,6 +59,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signIn = async (email: string, password: string) => {
     try {
       setAuthError(null);
+      console.log('Attempting sign in with:', email);
+      
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       
       if (error) {
@@ -69,6 +71,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       if (data.session?.user) {
         const { user } = data.session;
+        console.log('Sign in successful:', user);
         // Check if this is the admin user
         if (user.email === 'CorinaAraya@demo.com') {
           setUser({ id: user.id, email: user.email, role: 'admin' });
