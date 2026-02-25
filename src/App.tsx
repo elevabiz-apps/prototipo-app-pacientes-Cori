@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import GoalsPage from "./pages/GoalsPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -32,26 +32,33 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             {/* Public routes */}
-            <Route path="/" element={<Index />} />
-            <Route path="/goals" element={<GoalsPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/log" element={<WeeklyLogPage />} />
-            <Route path="/progress" element={<ProgressPage />} />
-            <Route path="/admin/*" element={user?.role === "admin" ? <AdminPanelPage /> : <NotFound />} />
+            <Route path="/" element={<LoginPage />} />
             <Route path="/login" element={<LoginPage />} />
             
             {/* Protected routes - only for authenticated users */}
             <Route 
-              path="*" 
-              element={user ? (
-                <NotFound />
-              ) : (
-                <LoginPage />
-              ) 
-            } 
+              path="/goals" 
+              element={user ? <GoalsPage /> : <Navigate to="/" replace />}
             />
-
-            <Route path="*" element={<NotFound />} />
+            <Route 
+              path="/dashboard" 
+              element={user ? <DashboardPage /> : <Navigate to="/" replace />}
+            />
+            <Route 
+              path="/log" 
+              element={user ? <WeeklyLogPage /> : <Navigate to="/" replace />}
+            />
+            <Route 
+              path="/progress" 
+              element={user ? <ProgressPage /> : <Navigate to="/" replace />}
+            />
+            <Route 
+              path="/admin/*" 
+              element={user?.role === "admin" ? <AdminPanelPage /> : <Navigate to="/" replace />}
+            />
+            
+            {/* Catch-all for any other routes */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
