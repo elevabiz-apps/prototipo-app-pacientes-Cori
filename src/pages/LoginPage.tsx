@@ -9,15 +9,13 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 
 const LoginPage = () => {
-  const { signIn, signUp, loading } = useAuth();
+  const { signIn, signUp, loading, authError } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     
     try {
       if (isSignUp) {
@@ -29,7 +27,6 @@ const LoginPage = () => {
         toast.success('¡Bienvenido de vuelta!');
       }
     } catch (err: any) {
-      setError(err.message || 'Error al procesar la solicitud');
       toast.error('Error al procesar la solicitud');
     }
   };
@@ -47,9 +44,9 @@ const LoginPage = () => {
         </CardHeader>
         
         <CardContent>
-          {error && (
+          {authError && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{error}</p>
+              <p className="text-red-600 text-sm">{authError}</p>
             </div>
           )}
           
