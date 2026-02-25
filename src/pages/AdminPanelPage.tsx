@@ -110,7 +110,7 @@ const AdminPanelPage = () => {
           <Card className="border-2 border-purple-100 shadow-lg">
             <CardHeader>
               <CardTitle>Estadísticas</CardTitle>
-              <CardDescription>Resumen del progreso general</CardDescription>
+              <p className="text-sm text-gray-500">Resumen del progreso general</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="rounded-lg bg-white p-4 shadow-sm">
