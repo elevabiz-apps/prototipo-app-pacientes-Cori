@@ -23,32 +23,65 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Check session on mount
   useEffect(() => {
-    const session = supabase.auth.getSession();
-    session.then(({ data }) => {
-      if (data.session) {
-        const { user } = data.session;
-        // Determine role - in a real app, you'd fetch this from a users table
-        const role = user.email.includes('@admin.') ? 'admin' : 'patient';
-        setUser({ id: user.id, email: user.email, role });
+    const checkSession = async () => {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        console.error('Error getting session:', error);
+        setLoading(false);
+        return;
       }
+
+      if (session?.user) {
+        const { user } = session;
+        // Check if this is the admin user
+        if (user.email === 'CorinaAraya@demo.com') {
+          setUser({ id: user.id, email: user.email, role: 'admin' });
+        } else {
+          setUser({ id: user.id, email: user.email, role: 'patient' });
+        }
+      }
+      
       setLoading(false);
-    });
+    };
+
+    checkSession();
   }, []);
 
   const signIn = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    const { user } = data.session!;
-    const role = user.email.includes('@admin.') ? 'admin' : 'patient';
-    setUser({ id: user.id, email: user.email, role });
+    
+    if (error) {
+      throw new Error(error.message || 'Error al iniciar sesión');
+    }
+    
+    if (data.session?.user) {
+      const { user } = data.session;
+      // Check if this is the admin user
+      if (user.email === 'CorinaAraya@demo.com') {
+        setUser({ id: user.id, email: user.email, role: 'admin' });
+      } else {
+        setUser({ id: user.id, email: user.email, role: 'patient' });
+      }
+    }
   };
 
   const signUp = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) throw error;
-    const { user } = data.session!;
-    const role = user.email.includes('@admin.') ? 'admin' : 'patient';
-    setUser({ id: user.id, email: user.email, role });
+    
+    if (error) {
+      throw new Error(error.message || 'Error al crear cuenta');
+    }
+    
+    if (data.session?.user) {
+      const { user } = data.session;
+      // Check if this is the admin user
+      if (user.email === 'CorinaAraya@demo.com') {
+        setUser({ id: user.id, email: user.email, role: 'admin' });
+      } else {
+        setUser({ id: user.id, email: user.email, role: 'patient' });
+      }
+    }
   };
 
   const signOut = async () => {
