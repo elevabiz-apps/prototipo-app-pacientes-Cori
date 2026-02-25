@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -9,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 
 const LoginPage = () => {
-  const { signIn, signUp, loading, authError } = useAuth();
+  const { signIn, loading, authError } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
@@ -19,7 +17,7 @@ const LoginPage = () => {
     
     try {
       if (isSignUp) {
-        await signUp(email, password);
+        await signIn(email, password);
         toast.success('Cuenta creada exitosamente. Por favor inicia sesión.');
         setIsSignUp(false);
       } else {
@@ -121,7 +119,7 @@ const LoginPage = () => {
           
           {/* Demo credentials */}
           <div className="mt-6 p-3 bg-gray-50 rounded-lg">
-            <p className="text-xs text-gray-500 text-center mb-2">Demo credentials:</p>
+            <p className="text-xs text-gray-500 text-center mb-2">Credenciales de demostración:</p>
             <p className="text-xs text-gray-600 text-center">Email: CorinaAraya@demo.com</p>
             <p className="text-xs text-gray-600 text-center">Password: AppCorina2026$</p>
           </div>
