@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { toast } from 'sonner';
+import { AgentChat } from '@/components/AgentChat';
 
 const AdminPanelPage = () => {
   const { user, signOut } = useAuth();
@@ -72,8 +73,26 @@ const AdminPanelPage = () => {
           </Button>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card className="border-2 border-blue-100 shadow-lg">
+        {/* Tabs para diferentes secciones */}
+        <div className="space-y-6">
+          {/* Agentes de IA */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <span className="text-blue-600 font-bold">🤖</span>
+                </div>
+                Agente de IA - Gestión de Leads
+              </CardTitle>
+              <CardDescription>Conversaciones de Instagram y calificación de leads</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <AgentChat />
+            </CardContent>
+          </Card>
+
+          {/* Pacientes Registrados */}
+          <Card>
             <CardHeader>
               <CardTitle>Pacientes Registrados</CardTitle>
             </CardHeader>
@@ -107,7 +126,8 @@ const AdminPanelPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-purple-100 shadow-lg">
+          {/* Estadísticas */}
+          <Card>
             <CardHeader>
               <CardTitle>Estadísticas</CardTitle>
               <p className="text-sm text-gray-500">Resumen del progreso general</p>
@@ -115,8 +135,8 @@ const AdminPanelPage = () => {
             <CardContent className="space-y-4">
               <div className="rounded-lg bg-white p-4 shadow-sm">
                 <p className="text-sm text-gray-500">Total de pacientes: {patients.length}</p>
-                <p className="text-sm text-gray-500">Registros semanales: En progreso</p>
-                <p className="text-sm text-gray-500">Promedio de progreso: -</p>
+                <p className="text-sm text-gray-500">Leads calificados: En progreso</p>
+                <p className="text-sm text-gray-500">Tasa de conversión: -</p>
               </div>
               
               <div className="mt-4 p-4 bg-indigo-50 rounded-lg">

@@ -11,6 +11,7 @@ import ProgressPage from "./pages/ProgressPage";
 import NotFound from "./pages/NotFound";
 import AdminPanelPage from "./pages/AdminPanelPage";
 import LoginPage from "./pages/LoginPage";
+import AgentChat from "./components/AgentChat";
 
 import { useAuth } from "./context/AuthContext";
 
@@ -53,8 +54,12 @@ const App = () => {
               element={user ? <ProgressPage /> : <Navigate to="/" replace />}
             />
             <Route 
-              path="/admin/*" 
+              path="/admin" 
               element={user?.role === "admin" ? <AdminPanelPage /> : <Navigate to="/" replace />}
+            />
+            <Route 
+              path="/agent" 
+              element={user?.role === "admin" ? <AgentChat /> : <Navigate to="/" replace />}
             />
             
             {/* Catch-all for any other routes */}
