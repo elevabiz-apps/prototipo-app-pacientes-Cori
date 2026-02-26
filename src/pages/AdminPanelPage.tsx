@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { toast } from 'sonner';
-import { AgentChat } from '@/components/AgentChat';
+import AgentChat from '@/components/AgentChat';
 
 const AdminPanelPage = () => {
   const { user, signOut } = useAuth();
