@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -13,6 +15,7 @@ type AuthContextProps = {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => void;
+  authError: string | null;
 };
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);

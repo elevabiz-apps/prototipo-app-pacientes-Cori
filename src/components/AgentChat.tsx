@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
@@ -37,8 +37,8 @@ const AgentChat = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Simular carga de leads (en producción, conectar a API o Supabase)
-    const mockLeads = [
+    // Simulate loading leads (in production, connect to API or Supabase)
+    const mockLeads: Lead[] = [
       {
         id: '1',
         name: 'María González',
@@ -77,15 +77,15 @@ const AgentChat = () => {
 
     setLoading(true);
     try {
-      // Simular envío de mensaje (en producción, enviar a API)
-      const newMessageObj = {
+      // Simulate sending message (in production, send to API)
+      const newMessageObj: Message = {
         id: Date.now().toString(),
         text: newMessage,
         sender: 'agent',
         timestamp: new Date(),
       };
 
-      const updatedLead = {
+      const updatedLead: Lead = {
         ...selectedLead,
         messages: [...selectedLead.messages, newMessageObj],
         lastMessage: newMessage,
@@ -95,16 +95,16 @@ const AgentChat = () => {
       setSelectedLead(updatedLead);
       setNewMessage('');
 
-      // Simular respuesta automática del agente
+      // Simulate agent response
       setTimeout(() => {
-        const agentResponse = {
+        const agentResponse: Message = {
           id: (Date.now() + 1).toString(),
           text: 'Gracias por tu mensaje. Te contactaré pronto para agendar una llamada. Mientras tanto, puedes ver más información aquí: [Calendly Link]',
           sender: 'agent',
           timestamp: new Date(),
         };
 
-        const finalLead = {
+        const finalLead: Lead = {
           ...updatedLead,
           messages: [...updatedLead.messages, agentResponse],
           lastMessage: agentResponse.text,
